@@ -1,12 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
-import time
 from threading import Timer
+import winsound
 
 item_status = ' '
+headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"}
 
 def item_search(url): 
-    headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"}
     page = requests.get(url, headers=headers)
     soup = BeautifulSoup(page.content, 'html.parser')
     results = soup.find(id='root')
@@ -20,7 +20,8 @@ def item_availability():
     if item_avail == "Coming soon":
         print("Out Of Stock")
     elif item_availability == "Available to ship":
-        print("In Stock!!!")  
+        print("In Stock!!!")
+        winsound.PlaySound("*", winsound.SND_ALIAS)
     else:
          print("Error!")
     Timer(5, item_availability()).start()
